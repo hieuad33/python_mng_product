@@ -7,6 +7,7 @@ def initdata():
     'price':[10, 20, 30] ,
     'product_type': ['Thiết bị điện', 'Thiết bị điện tử', 'Thiết bị gia dụng']
     })
+    print(inout_data)
    
     save_data(inout_data)
 
@@ -33,10 +34,10 @@ def delete_row(data,index):
 def add_pr(code,name,quantity,price,product_type):
         # Thêm dữ liệu
     data=read_data()
-   
-    new_row = pd.Series({"code": code, "name": name, "quantity": quantity, "price": price, "product_type": product_type})
-    print(new_row)
-    data = pd.concat([data, new_row.to_frame()], ignore_index=True)
+    data.loc[len(data.index)] = [str(name),int(quantity), str(code),float(price),str(product_type)] 
+    
+  
+    
     print(data)
     save_data(data)
 initdata() 

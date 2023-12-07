@@ -5,6 +5,8 @@ from forms import *
 import forms as fm
 import tkinter as tk
 from tkinter import ttk
+from cate import Appcate
+
 
 def on_add():
     # Xử lý nút thêm sản phẩm
@@ -13,9 +15,8 @@ def on_add():
     # ...
 
 def on_view():
-    # Xử lý nút xem tất cả sản phẩm
-    print('đ')
-    # ...
+    ct=Appcate()
+    
 
 def on_edit():
     # Xử lý nút chỉnh sửa sản phẩm
@@ -53,7 +54,7 @@ add_button.grid(row=1, column=0)
 
 # Tạo nút xem tất cả sản phẩm
 
-view_button = tk.Button(win, text="Xem tất cả sản phẩm", command=on_view)
+view_button = tk.Button(win, text="Tool", command=on_view)
 view_button.grid(row=1, column=1)
 
 # Tạo nút chỉnh sửa sản phẩm
