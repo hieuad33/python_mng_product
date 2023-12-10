@@ -113,7 +113,8 @@ Label(left_frame, text="Profuct detail").grid(row=1, column=0, padx=5, pady=5)
 # Tạo label cho tiêu đề
 
 
-title_label = tk.Label(win, text="Quản lý sản phẩm",bg="purple")
+title_label = tk.Label(win, text="Quản lý sản phẩm",bg="skyblue")
+title_label.config(font=("Arial", 20, "bold"))
 title_label.grid(row=0, column=0, columnspan=2)
 
 # Tạo nút thêm sản phẩm
@@ -201,13 +202,16 @@ btn_updata.grid(row=3,column=2)
 btn_delete=tk.Button(left_frame, text="xóa", command=delete_row)
 btn_delete.grid(row=3,column=3)
 
-search_frame = Frame(win).grid(row=3,column=1)
-formseach=tk.Entry(search_frame,width=70 ).grid(row=3,column=1)
-tsearch=tk.Label(search_frame, text="Search by name").grid(row=3, column=0)
-re_button = tk.Button(search_frame, text="reload", command=re_data)
-re_button.grid(row=3, column=2)
 
-search_button = tk.Button(search_frame, text="Search name", command=re_data)
+search_frame = Frame(win,bg="red")
+search_frame.grid(row=3,column=1, padx=10, pady=5,columnspan=4)
+formseach=tk.Entry(search_frame,width=70 )
+formseach.grid(row=0,column=1)
+tsearch=tk.Label(search_frame, text="Search by name").grid(row=0, column=0)
+re_button = tk.Button(search_frame, text="reload", command=re_data)
+re_button.grid(row=0, column=3)
+
+search_button = tk.Button(search_frame, text="Search", command=re_data)
 search_button.grid(row=0, column=2)
   
 
