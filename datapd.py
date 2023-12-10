@@ -1,16 +1,7 @@
 import pandas as pd
-def initdata():
-    inout_data = pd.DataFrame({
-    'name': ['Sản phẩm 1', 'Sản phẩm 2', 'Sản phẩm 3'],
-    'quantity': [10, 20, 30],
-    'code': ['ABC123', 'DEF456', 'GHI789'],
-    'price':[10, 20, 30] ,
-    'product_type': ['Thiết bị điện', 'Thiết bị điện tử', 'Thiết bị gia dụng']
-    })
-    print(inout_data)
-   
-    save_data(inout_data)
 
+
+    
 def add_category(cates,newcate):
     cates.append({
         'name': newcate
@@ -35,9 +26,6 @@ def add_pr(code,name,quantity,price,product_type):
         # Thêm dữ liệu
     data=read_data()
     data.loc[len(data.index)] = [str(name),int(quantity), str(code),float(price),str(product_type)] 
-    
-  
-    
+
     print(data)
     save_data(data)
-initdata() 
