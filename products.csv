@@ -1,6 +1,9 @@
 ,code,name,quantity,price,type_code
-0,ABC123,Sản phẩm 1,10,10,1
-1,DEF456,Sản phẩm 2,20,20,2
-2,GHI789,Sản phẩm 3,30,30,3
-3,D1F456,Sản phẩm 4,35,66,2
-4,DEF2456,Sản phẩm 5,12,44,6
+0,ABC123,Sản phẩm 1,10,10.0,1
+1,DEF456,Sản phẩm 2,20,20.0,2
+4,DEF2456,Sản phẩm 5,12,44.0,6
+7,2sd,Sản phẩm 5,12,44.0,6
+9,D1F456,Sản phẩm 4,35,66.0,10
+10,2sda,Sản phẩm 5,12,44.0,9
+11,1,Sản phẩm 5,999,44.0,6
+12,43ẻw,Sản phẩm 5,12,44.0,6
