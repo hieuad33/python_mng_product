@@ -2,9 +2,11 @@
 import datapd as dt
 import pandas as pd
 from tkinter import *
-
 import tkinter as tk
+import bd 
 from tkinter import ttk
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 
@@ -327,6 +329,41 @@ def on_click_them():
 button_them.config(command=on_click_them)
 
 
+def show_plot_sell():
+    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(15, 6), tight_layout=True)
+    product_df = pd.read_csv('products.csv')
+    sell_df=pd.read_csv('sell_data.csv')
+    data = pd.merge(left=product_df, right=sell_df, on='code')
+    data=data.groupby(['code','name','price'])[['quantity_sell']].sum()
+    colors = plt.cm.Set1.colors[:len(data)]
+    # Vẽ biểu đồ cột
+
+    axes[0].bar(data.index.get_level_values("name"), data['quantity_sell'],color=colors)
+    axes[0].set_xlabel("Sản phẩm")
+    axes[0].set_ylabel("Số lượng đơn hàng")
+    axes[0].set_title("Số đơn hàng theo sản phẩm")
+ 
+    data['sales_total']= data['quantity_sell']*data.index.get_level_values("price")  
+   
+    axes[1].bar(data.index.get_level_values("name"), data['sales_total'], color=colors)
+    axes[1].set_title("Giá trị sản phẩm đa bán theo sản phẩm")
+    axes[1].set_xlabel("sản phẩm")
+    axes[1].set_ylabel("tổng tiền")    
+    # Hiển thị biểu đồ   
+    plt.show()
+def show_plot_pr():
+    product_df = pd.read_csv('products.csv')
+    category_df = pd.read_csv('category.csv')
+    thong_ke = product_df.groupby('type_code')['quantity'].sum().sort_values(ascending=True)
+   
+    pr=product_df["price"].astype(np.int32)
+    colors = plt.cm.Set1.colors[:len(product_df)]
+    plt .bar(product_df["quantity"],pr, color=colors)
+    plt.title("Số lượng sản phẩm theo mức giá")
+    plt.xlabel("Mức giá")
+    plt.ylabel("Số lượng")
+    plt.show()
+
 
 tk_frame=Frame(win, width=500, height=700)
 tk_frame.grid(row=4,column=0)
@@ -334,18 +371,19 @@ tk_frame.grid(row=4,column=0)
 label_ttk = tk.Label(tk_frame, text="Thống kê")
 label_ttk.grid(row=0,column=0)
 
-button_tk_type= tk.Button(tk_frame, text="theo loại sản phẩm")
+button_tk_type= tk.Button(tk_frame, text="theo loại sản phẩm", width=20)
 button_tk_type.grid(row=1, column=0)
-button_tk_type.config(command=on_click_them)
+button_tk_type.config(command=bd.tk_typeprr)
 
-button_tk_sell= tk.Button(tk_frame, text="thống kê bán hàng")
+button_tk_sell= tk.Button(tk_frame, text="thống kê bán hàng", width=20)
 button_tk_sell.grid(row=2, column=0)
-button_tk_sell.config(command=on_click_them)
+button_tk_sell.config(command=show_plot_sell)
 
 
-button_tk_pr= tk.Button(tk_frame, text="theo mức giá")
+button_tk_pr= tk.Button(tk_frame, text="theo mức giá", width=20)
 button_tk_pr.grid(row=3, column=0)
-button_tk_pr.config(command=on_click_them)
+button_tk_pr.config(command=show_plot_pr)
+
 
 
 
