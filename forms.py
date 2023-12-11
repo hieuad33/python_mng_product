@@ -1,74 +1,64 @@
-
 import tkinter as tk
-import datapd as dt
-class formdata():
-    def __init__(self):
-        self.win = tk.Tk()
-        self.code_entry = tk.Entry(self.win)
-        self.code_entry.grid(row=0, column=1)
-        self.name_entry = tk.Entry(self.win)
-        self.name_entry.grid(row=1, column=1)
-        self.cate_entry = tk.Entry(self.win)
-        self.cate_entry.grid(row=2, column=1)
-        self.price_entry = tk.Entry(self.win)
-        self.price_entry.grid(row=3, column=1)
-        self.quantity_entry = tk.Entry(self.win)
-        self.quantity_entry.grid(row=4, column=1)
-        # Tạo label cho tmax sản phẩm
-        code_label = tk.Label(self.win, text="Mã sản phẩm:")
-        code_label.grid(row=0, column=0)
-        
-        # Tạo entry cho tên sản phẩm    
-        name_label = tk.Label(self.win, text="Tên sản phẩm:")
-        name_label.grid(row=1, column=0)  
-        # Tạo entry cho tên sản phẩm
-        # Tạo label cho mô tả sản phẩm  
-        cate_label = tk.Label(self.win, text="loại sản phẩm:")
-        cate_label.grid(row=2, column=0)
-    
-        # Tạo entry cho loại sản phẩm
-    
-       
-        # Tạo label cho giá sản phẩm
-    
-        price_label = tk.Label(self.win, text="Giá sản phẩm:")
-        price_label.grid(row=3, column=0)
-    
-        # Tạo entry cho giá sản phẩm
-    
-       
-        # Tạo label cho số lượng sản phẩm
-    
-        quantity_label = tk.Label(self.win, text="Số lượng sản phẩm:")
-        quantity_label.grid(row=4, column=0)
-    
-        # Tạo entry cho số lượng sản phẩm
-    
-    
-        # Tạo button để thêm sản phẩm
-    
-        submit_button = tk.Button(self.win, text="Thêm sản phẩm", command=self.on_submit)
-        submit_button.grid(row=5, column=0, columnspan=2)
-    
-        self.win.mainloop()
 
-    
-    
-    def on_submit(self):
-        code= self.code_entry.get()
-        name = self.name_entry.get()
-        cate =self.cate_entry.get()
-        price = self.price_entry.get()
-        quantity = self.quantity_entry.get()
-        print(code)
-        print(name)
-        print(cate)
-        print(price)
-        print(quantity)
-        dt.add_pr(code,name,quantity,price,cate)
-    
-        self.win.destroy()
+# Tạo cửa sổ
+root = tk.Tk()
+
+# Tạo nhãn cho ô mã sản phẩm
+label_ma_san_pham = tk.Label(root, text="Mã sản phẩm")
+
+# Tạo ô nhập mã sản phẩm
+entry_ma_san_pham = tk.Entry(root)
+
+# Tạo nhãn cho ô tên sản phẩm
+label_ten_san_pham = tk.Label(root, text="Tên sản phẩm")
+
+# Tạo ô nhập tên sản phẩm
+entry_ten_san_pham = tk.Entry(root)
+
+# Tạo nhãn cho ô số lượng
+label_so_luong = tk.Label(root, text="Số lượng")
+
+# Tạo ô nhập số lượng
+entry_so_luong = tk.Entry(root)
+
+# Tạo nhãn cho ô ngày bán
+label_ngay_ban = tk.Label(root, text="Ngày bán")
+
+# Tạo ô chọn ngày bán
+entry_ngay_ban = tk.Entry(root, width=10)
+
+# Tạo nút "Thêm"
+button_them = tk.Button(root, text="Thêm")
+
+# Sắp xếp các widget
+label_ma_san_pham.grid(row=0, column=0)
+entry_ma_san_pham.grid(row=0, column=1)
+label_ten_san_pham.grid(row=1, column=0)
+entry_ten_san_pham.grid(row=1, column=1)
+label_so_luong.grid(row=2, column=0)
+entry_so_luong.grid(row=2, column=1)
+label_ngay_ban.grid(row=3, column=0)
+entry_ngay_ban.grid(row=3, column=1)
+button_them.grid(row=4, column=1)
+
+# Bắt sự kiện khi nhấn nút "Thêm"
+def on_click_them():
+    # Lấy dữ liệu từ các ô nhập
+    ma_san_pham = entry_ma_san_pham.get()
+    ten_san_pham = entry_ten_san_pham.get()
+    so_luong = entry_so_luong.get()
+    ngay_ban = entry_ngay_ban.get()
+
+    # In thông tin đã nhập
+    print(f"Mã sản phẩm: {ma_san_pham}")
+    print(f"Tên sản phẩm: {ten_san_pham}")
+    print(f"Số lượng: {so_luong}")
+    print(f"Ngày bán: {ngay_ban}")
+
+button_them.config(command=on_click_them)
+
+# Chạy cửa sổ
 
 
-  #  def data(code='',name='',qt='',type=''):
-        
+
+root.mainloop()

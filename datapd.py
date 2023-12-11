@@ -2,17 +2,11 @@ import pandas as pd
 def finditembycode(df,code):
     a=df.loc[df["code"] == code]
     return a
-        
-    
-def add_category(cates,newcate):
-    cates.append({
-        'name': newcate
-         })
-def save_category(cates):
-    data.to_csv('categotys.csv')
+
 def save_data(data,fl='products.csv'):
     data.to_csv(fl)
 def delete_data(code):
+    
     data=read_data()
     ind=finditembycode(data,code).index
     data = data.drop(ind)
@@ -31,9 +25,10 @@ def show_data(data):
 
 def add_pr(code,name,quantity,price,product_type):
         # Thêm dữ liệu
-    data=read_data()
-    data.loc[len(data)+1] = [str(code),str(name),int(quantity),float(price),int(product_type)] 
+    tb=read_data("products.csv")
+    
+    tb.loc[len(tb)+1] = [str(code),str(name),int(quantity),float(price),int(product_type)] 
 
     
-    save_data(data)
-    return data
+    save_data(tb)
+    return tb

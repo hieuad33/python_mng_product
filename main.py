@@ -2,11 +2,10 @@
 import datapd as dt
 import pandas as pd
 from tkinter import *
-from forms import * 
-import forms as fm
+
 import tkinter as tk
 from tkinter import ttk
-from cate import Appcate
+
 
 
 
@@ -42,6 +41,11 @@ def re_data():
     df_rows =df.to_numpy().tolist()
     for row in df_rows:
         treeview.insert('', "end", values=row)
+def f_data(df_new):
+    treeview.delete(*treeview.get_children())  
+    df_rows =df_new.to_numpy().tolist()
+    for row in df_rows:
+        treeview.insert('', "end", values=row)
 def on_combobox_change(event):
     # Get the selected item
     selected_item = event.widget.get()
@@ -50,17 +54,7 @@ def on_combobox_change(event):
     txs[len(pro.columns)-1].insert(0, sl_cate.iloc[0, 1])
     txs[len(pro.columns)].delete(0, "end")
     txs[len(pro.columns)].insert(0, sl_cate.iloc[0, 0])
-def finditembycode(code):
-    print("---------")
-    print(pro)
-
-    a=pro.loc[pro["code"] == code]
-    print(a)
-    print(a.index)
-    print("---------")
-
-    return a
-        
+       
 def add_row():
  
     code= txs[0].get()
@@ -87,8 +81,30 @@ def reset_form():
         txs[i].delete(0, "end")
         txs[i].insert(0, "")
         i+=1
-def findbyname():
-    print("dsd")
+def search_data():
+    mx=0
+    mn=0
+    s_name=formseach.get().strip()
+    s_max=fmax.get().strip()
+    s_min=fmin.get().strip()
+    s_cate=fcate.get()
+    
+    if(s_max != ''):
+        mx=float(s_max)
+    if(s_min != ''):
+        mn=float(s_min)
+    print(s_cate)
+
+    dfs=df
+    if(s_cate!=''):
+        dfs=dfs.loc[df['type_name'].str.contains(s_cate)]
+    if (s_name!=''):
+     dfs=dfs.loc[df['name'].str.contains(s_name)]
+    
+    if (mx != 0):
+        if (mx>=mn):
+          dfs= dfs.loc[df['price'].between(mn, mx)]
+    f_data(dfs)
     
 win = tk.Tk()
 win.title("Frame Example")
@@ -103,7 +119,7 @@ inf_frame.grid(row=2, column=0, padx=5, pady=5, columnspan=4)
 
 
 right_frame = Frame(win, width=700, height=400, bg='grey')
-right_frame.grid(row=2, column=1, padx=10, pady=5)
+right_frame.grid(row=2, column=1, padx=10, pady=5,rowspan=2)
 
 # Create frames and labels in left_frame
 
@@ -125,8 +141,8 @@ title_label.grid(row=0, column=0, columnspan=2)
 
 
 
-treeview = ttk.Treeview(right_frame)
-treeview.grid(row=0,column=0, padx=5, pady=5)
+treeview = ttk.Treeview(right_frame,)
+treeview.grid(row=0,column=0,rowspan=2, padx=5, pady=5)
 
 
 
@@ -150,7 +166,7 @@ product_info_frame.grid(row=2, column=3)
 
 treeview.bind('<<TreeviewSelect>>', on_product_selected)
 product_info_frame.config(borderwidth=1, relief="solid")
-treeview.pack_propagate(False)
+
 treeview.pack()
 
 # Tạo các dòng cho bảng
@@ -202,17 +218,53 @@ btn_updata.grid(row=3,column=2)
 btn_delete=tk.Button(left_frame, text="xóa", command=delete_row)
 btn_delete.grid(row=3,column=3)
 
+btleft_frame=Frame(win, width=500, height=700)
+btleft_frame.grid(row=3,column=0,padx=10, pady=5)
 
-search_frame = Frame(win,bg="red")
-search_frame.grid(row=3,column=1, padx=10, pady=5,columnspan=4)
-formseach=tk.Entry(search_frame,width=70 )
-formseach.grid(row=0,column=1)
-tsearch=tk.Label(search_frame, text="Search by name").grid(row=0, column=0)
+search_frame = Frame(btleft_frame)
+search_frame.grid(row=3,column=0)
+
+tsearch=tk.Label(search_frame, text="Search").grid(row=0, column=0,pady=5,columnspan=2)
+
+tname=tk.Label(search_frame, text="Name").grid(row=1, column=0)
+formseach=tk.Entry(search_frame,width=30  )
+formseach.grid(row=1,column=1,padx=5)
+
+fmin=tk.Entry(search_frame ,width=30 )
+tmin=tk.Label(search_frame, text="Min Price").grid(row=2, column=0)
+fmin.grid(row=2,column=1,padx=5)
+fmax=tk.Entry(search_frame,width=30  )
+tmax=tk.Label(search_frame, text="Max Price").grid(row=3, column=0)
+fmax.grid(row=3,column=1,padx=5)
+tcate=tk.Label(search_frame, text="Type").grid(row=4, column=0)
+fcate=ttk.Combobox(search_frame)
+fcate.grid(row=4, column=1)
+fcate["values"] =  list(_cate['type_name'])
+
+
+
+
 re_button = tk.Button(search_frame, text="reload", command=re_data)
-re_button.grid(row=0, column=3)
+re_button.grid(row=5, column=1)
 
-search_button = tk.Button(search_frame, text="Search", command=re_data)
-search_button.grid(row=0, column=2)
+search_button = tk.Button(search_frame, text="Search", command=search_data)
+search_button.grid(row=5, column=0)
+
+
+
+sell_frame = Frame(win)
+sell_frame.grid(row=4,column=1)
+
+
+
+
+
+
+
+
+
+
+
   
 
 

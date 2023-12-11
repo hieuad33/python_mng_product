@@ -1,8 +1,8 @@
 ,code,name,quantity,price,type_code
 0,ABC123,Sản phẩm 1,10,10.0,1
 1,DEF456,Sản phẩm 2,20,20.0,2
+2,GHI789,Sản phẩm 3,30,30.0,3
 4,DEF2456,Sản phẩm 5,12,44.0,6
-7,2sd,Sản phẩm 5,12,44.0,6
-9,D1F456,Sản phẩm 4,35,66.0,10
-10,2sda,Sản phẩm 5,12,44.0,9
-12,43ẻw,Sản phẩm 5,12,44.0,6
+5,D1F456,Sản phẩm 3,35,66.0,2
+6,1a,1a,12,232.0,3
+7,2s,aaa,1,5443.0,6
