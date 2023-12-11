@@ -22,7 +22,12 @@ def on_product_selected(event):
         txs[i].insert(0, item)
         i+=1
      
+    entry_ma_san_pham.delete(0, "end")
+    entry_ma_san_pham.insert(0, product[0])
 
+    entry_ten_san_pham.delete(0, "end")
+    entry_ten_san_pham.insert(0, product[1])
+    
 
 
 def sort_col(col, reverse=False):
@@ -133,34 +138,12 @@ title_label = tk.Label(win, text="Quản lý sản phẩm",bg="skyblue")
 title_label.config(font=("Arial", 20, "bold"))
 title_label.grid(row=0, column=0, columnspan=2)
 
-# Tạo nút thêm sản phẩm
-
-
-
-
-
-
 
 treeview = ttk.Treeview(right_frame,)
 treeview.grid(row=0,column=0,rowspan=2, padx=5, pady=5)
 
-
-
-
-# Tạo bảng để hiển thị danh sách sản phẩm
-
-
-
-# Tạo các cột cho bảng
-
-
-
-
 product_info_frame = Frame(inf_frame)
 product_info_frame.grid(row=2, column=3)
-# Tạo các label cho thông tin sản phẩm
-
-
 
 # Thêm sự kiện cho bảng
 
@@ -241,9 +224,6 @@ fcate=ttk.Combobox(search_frame)
 fcate.grid(row=4, column=1)
 fcate["values"] =  list(_cate['type_name'])
 
-
-
-
 re_button = tk.Button(search_frame, text="reload", command=re_data)
 re_button.grid(row=5, column=1)
 
@@ -254,6 +234,119 @@ search_button.grid(row=5, column=0)
 
 sell_frame = Frame(win)
 sell_frame.grid(row=4,column=1)
+
+sell_form_frame = Frame(sell_frame)
+sell_form_frame.grid(row=0,column=0)
+
+label_ma_san_pham = tk.Label(sell_form_frame, text="Mã sản phẩm")
+
+# Tạo ô nhập mã sản phẩm
+entry_ma_san_pham = tk.Entry(sell_form_frame)
+
+# Tạo nhãn cho ô tên sản phẩm
+label_ten_san_pham = tk.Label(sell_form_frame, text="Tên sản phẩm")
+
+# Tạo ô nhập tên sản phẩm
+entry_ten_san_pham = tk.Entry(sell_form_frame)
+
+# Tạo nhãn cho ô số lượng
+label_so_luong = tk.Label(sell_form_frame, text="Số lượng")
+
+# Tạo ô nhập số lượng
+entry_so_luong = tk.Entry(sell_form_frame)
+
+# Tạo nhãn cho ô ngày bán
+label_ngay_ban = tk.Label(sell_form_frame, text="Ngày bán")
+
+# Tạo ô chọn ngày bán
+entry_ngay_ban = tk.Entry(sell_form_frame, width=10)
+
+# Tạo nút "Thêm"
+button_them = tk.Button(sell_form_frame, text="Thêm")
+
+# Sắp xếp các widget
+label_titlesell = tk.Label(sell_form_frame, text="Bán hàng").grid(row=0, column=0,columnspan=2)
+label_ma_san_pham.grid(row=1, column=0)
+entry_ma_san_pham.grid(row=1, column=1)
+label_ten_san_pham.grid(row=2, column=0)
+entry_ten_san_pham.grid(row=2, column=1)
+label_so_luong.grid(row=3, column=0)
+entry_so_luong.grid(row=3, column=1)
+label_ngay_ban.grid(row=4, column=0)
+entry_ngay_ban.grid(row=4, column=1)
+button_them.grid(row=5, column=1)
+
+
+
+sell_table_frame=Frame(sell_frame)
+sell_table_frame.grid(row=0,column=1)
+
+selltreeview = ttk.Treeview(sell_table_frame)
+selltreeview.pack(side="left", fill="both", expand=True)
+
+sell=dt.read_data("sell_data.csv")
+
+
+
+selltreeview["columns"] = list(sell.columns)
+for column in selltreeview["columns"]:
+    selltreeview.column(column,width=150)
+
+for column in selltreeview["columns"]:
+    selltreeview.heading(column, text=column)
+
+sell_rows = sell.to_numpy().tolist()
+for row in sell_rows:
+    selltreeview.insert('', "end", values=row)
+
+for col in list(sell.columns):
+    selltreeview.heading(col, command=lambda c=col: sort_col(c))
+
+def datasell():
+    selltreeview.delete(*selltreeview.get_children()) 
+    sell=dt.read_data("sell_data.csv")
+    df_rows =sell.to_numpy().tolist()
+    for row in df_rows:
+        selltreeview.insert('', "end", values=row)
+def on_click_them():
+    # Lấy dữ liệu từ các ô nhập
+    ma_san_pham = entry_ma_san_pham.get()
+    so_luong = entry_so_luong.get()
+    ngay_ban = entry_ngay_ban.get()
+
+    sell.loc[len(sell)+1] = [str(ma_san_pham),str(so_luong),str(ngay_ban)] 
+
+    dt.save_data(sell,fl='sell_data.csv')
+    # In thông tin đã nhập
+    print(f"Mã sản phẩm: {ma_san_pham}")
+   
+    print(f"Số lượng: {so_luong}")
+    print(f"Ngày bán: {ngay_ban}")
+    datasell()
+
+button_them.config(command=on_click_them)
+
+
+
+tk_frame=Frame(win, width=500, height=700)
+tk_frame.grid(row=4,column=0)
+
+label_ttk = tk.Label(tk_frame, text="Thống kê")
+label_ttk.grid(row=0,column=0)
+
+button_tk_type= tk.Button(tk_frame, text="theo loại sản phẩm")
+button_tk_type.grid(row=1, column=0)
+button_tk_type.config(command=on_click_them)
+
+button_tk_sell= tk.Button(tk_frame, text="thống kê bán hàng")
+button_tk_sell.grid(row=2, column=0)
+button_tk_sell.config(command=on_click_them)
+
+
+button_tk_pr= tk.Button(tk_frame, text="theo mức giá")
+button_tk_pr.grid(row=3, column=0)
+button_tk_pr.config(command=on_click_them)
+
 
 
 

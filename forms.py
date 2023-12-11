@@ -41,6 +41,10 @@ label_ngay_ban.grid(row=3, column=0)
 entry_ngay_ban.grid(row=3, column=1)
 button_them.grid(row=4, column=1)
 
+
+
+
+
 # Bắt sự kiện khi nhấn nút "Thêm"
 def on_click_them():
     # Lấy dữ liệu từ các ô nhập
