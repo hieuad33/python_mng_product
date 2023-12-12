@@ -21,6 +21,7 @@ def map_typecode_to_typename(type_code):
 # Thống kê số lượng sản phẩm theo type_code và sắp xếp giảm dần
 thong_ke = product_df.groupby('type_code')['quantity'].sum().sort_values(ascending=True)
 gombang=pd.merge(left=product_df, right=category_df, on='type_code')
+
 thong_ke = product_df.groupby('type_code')['quantity'].sum().sort_values(ascending=True)
 
 # Tạo giao diện Tkinter

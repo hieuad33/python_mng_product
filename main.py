@@ -372,16 +372,16 @@ label_ttk = tk.Label(tk_frame, text="Thống kê")
 label_ttk.grid(row=0,column=0)
 
 button_tk_type= tk.Button(tk_frame, text="theo loại sản phẩm", width=20)
-button_tk_type.grid(row=1, column=0)
+button_tk_type.grid(row=1, column=0,pady=5,padx=50)
 button_tk_type.config(command=bd.tk_typeprr)
 
 button_tk_sell= tk.Button(tk_frame, text="thống kê bán hàng", width=20)
-button_tk_sell.grid(row=2, column=0)
+button_tk_sell.grid(row=2, column=0,pady=5,padx=50)
 button_tk_sell.config(command=show_plot_sell)
 
 
 button_tk_pr= tk.Button(tk_frame, text="theo mức giá", width=20)
-button_tk_pr.grid(row=3, column=0)
+button_tk_pr.grid(row=3, column=0,pady=5,padx=5)
 button_tk_pr.config(command=show_plot_pr)
 
 
